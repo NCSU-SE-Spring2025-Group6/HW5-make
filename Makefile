@@ -25,18 +25,17 @@ $(STOPPED) : $(CLEANED)
 
 # Step 3: Report frequency of words
 $(FREQS): $(STOPPED)
-	cat $< | awk \
-		'{ \
-			for (i = 1; i <= NF; i++) { \
-				word = $$i; \
-				count[word]++; \
-			} \
+	awk '{ \
+		for (i = 1; i <= NF; i++) { \
+			word = $$i; \
+			count[word]++; \
 		} \
-		END { \
-			for (word in count) { \
-				print count[word], word; \
-			} \
-		}' | sort -nr > $@
+	} \
+	END { \
+		for (word in count) { \
+			print count[word], word; \
+		} \
+	}' $< | sort -nr > $@
 
 # Step 4: Extract Top 10 most frequent words
 $(TOP_WORDS): $(FREQS)
