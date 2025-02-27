@@ -49,7 +49,7 @@ $(TABLE): $(CLEANED) $(TOP_WORDS)
 
 # Cleanup
 clean:
-	rm -f $(CLEANED) $(TOKENS) $(FREQS) $(TOP_WORDS) $(TABLE)
+	rm -f $(CLEANED) $(STOPPED) $(TOKENS) $(FREQS) $(TOP_WORDS) $(TABLE)
 
 
 step1:
@@ -65,4 +65,4 @@ step3:
 
 
 step4:
-	$(MAKE) clean $(TABLE); head $(TABLE) # | column -s, -t
+	$(MAKE) clean $(TABLE); head $(TABLE) | column -s, -t
