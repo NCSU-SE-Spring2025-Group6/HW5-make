@@ -2,18 +2,18 @@
 PASS == 1 {
     top_words[NR] = $1
     freq[$1] = 0
-    next
+    printf "%s,", $1
 }
 
 # Second pass: Process the cleaned text
 PASS == 2 {
     # If we encounter an empty line, it means the end of a paragraph
     if (NF == 0) {
+        printf "\n"
         # Print the frequencies for the current paragraph
         for (i = 1; i <= length(top_words); i++) {
             printf "%d,", freq[top_words[i]]
         }
-        printf "\n"
 
         # Reset the frequency array for the next paragraph
         for (i = 1; i <= length(top_words); i++) {
@@ -35,10 +35,10 @@ PASS == 2 {
 END {
     # Print the frequencies for the last paragraph if it wasn't followed by an empty line
     if (length(freq) > 0) {
+        printf "\n"
         for (i = 1; i <= length(top_words); i++) {
             printf "%d,", freq[top_words[i]]
         }
-        printf "\n"
     }
 }
 
